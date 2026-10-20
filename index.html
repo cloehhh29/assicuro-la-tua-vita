@@ -235,6 +235,90 @@
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
         }
+   
+    
+    
+/* Miglioramento grafico della testata */
+header {
+    padding: 36px 18px 30px;
+    background: #ffffff;
+    color: #12366f;
+    border-bottom: 4px solid #347bd1;
+}
+
+header h1 {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+header p {
+    color: #52647a;
+    font-size: 1.05rem;
+}
+
+/* Menu più moderno */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(18, 54, 111, 0.16);
+}
+
+nav a {
+    padding: 9px 12px;
+    border-radius: 7px;
+    transition: background-color 0.2s ease;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    background: rgba(255, 255, 255, 0.16);
+    text-decoration: none;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* Sezioni più eleganti */
+section h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+}
+
+section h2::after {
+    content: "";
+    display: block;
+    width: 58px;
+    height: 3px;
+    margin: 12px auto 0;
+    background: #347bd1;
+    border-radius: 3px;
+}
+
+/* Schede con un effetto delicato */
+.servizi .scheda {
+    border: 1px solid #e3eaf2;
+    transition: box-shadow 0.2s ease;
+}
+
+.servizi .scheda:hover {
+    box-shadow: 0 8px 22px rgba(20, 55, 90, 0.12);
+}
+
+/* Rispetto delle preferenze di accessibilità */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    nav a,
+    .servizi .scheda {
+        transition: none;
+    }
+}
+
+    
+    
     </style>
 
        

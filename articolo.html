@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Leggi le notizie e gli approfondimenti di Assicuro la tua vita.">
+  <title>Articolo | Assicuro la tua vita</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #263447;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #174ea6;
+      color: white;
+      padding: 24px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 35px auto;
+      padding: 28px;
+      background: white;
+      border-radius: 14px;
+      box-sizing: border-box;
+      width: calc(100% - 30px);
+      box-shadow: 0 5px 20px rgba(20, 55, 90, 0.08);
+    }
+
+    .categoria, .data {
+      color: #52647a;
+      font-size: 0.95rem;
+    }
+
+    #copertina {
+      display: none;
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    #testo img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .ritorno {
+      display: inline-block;
+      margin-top: 25px;
+      color: #174ea6;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Assicuro la tua vita</h1>
+    <a href="/assicuro-la-tua-vita/">Torna alla homepage</a>
+  </header>
+
+  <main id="contenuto">
+    <p>Caricamento dell'articolo...</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+  <script>
+    async function caricaArticolo() {
+      const contenuto = document.getElementById("contenuto");
+      const parametri = new URLSearchParams(window.location.search);
+      const file = parametri.get("file");
+
+      if (!file || !/^[a-zA-Z0-9_-]+\.md$/.test(file)) {
+        contenuto.textContent = "Articolo non trovato. Torna alla homepage.";
+        return;
+      }
+
+      try {
+        const url =
+          "https://raw.githubusercontent.com/cloehhh29/assicuro-la-tua-vita/main/notizie/" +
+          encodeURIComponent(file);
+
+        const risposta = await fetch(url);
+
+        if (!risposta.ok) {
+          throw new Error("Articolo non trovato");
+        }
+
+        const testo = await risposta.text();
+        const parti = testo.match(
+          /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/
+        );
+
+        if (!parti) {
+          throw new Error("Formato dell'articolo non valido");
+        }
+
+        const dati = jsyaml.load(parti[1]) || {};
+
+        document.title =
+          (dati.title || "Articolo") + " | Assicuro la tua vita";
+
+        contenuto.replaceChildren();
+
+        const titolo = document.createElement("h2");
+        titolo.textContent = dati.title || "Senza titolo";
+        contenuto.appendChild(titolo);
+
+        if (dati.categoria) {
+          const categoria = document.createElement("p");
+          categoria.className = "categoria";
+          categoria.textContent = dati.categoria;
+          contenuto.appendChild(categoria);
+        }
+
+        if (dati.date) {
+          const data = document.createElement("p");
+          data.className = "data";
+          data.textContent = new Date(dati.date).toLocaleDateString("it-IT");
+          contenuto.appendChild(data);
+        }
+
+        if (dati.immagine) {
+          const immagine = document.createElement("img");
+          immagine.id = "copertina";
+          immagine.src = dati.immagine;
+          immagine.alt = dati.title || "Immagine dell'articolo";
+          immagine.style.display = "block";
+          contenuto.appendChild(immagine);
+        }
+
+        if (dati.descrizione) {
+          const descrizione = document.createElement("p");
+          descrizione.textContent = dati.descrizione;
+          contenuto.appendChild(descrizione);
+        }
+
+        const testoArticolo = document.createElement("div");
+        testoArticolo.id = "testo";
+        testoArticolo.innerHTML = DOMPurify.sanitize(
+          marked.parse(parti[2])
+        );
+        contenuto.appendChild(testoArticolo);
+
+        const ritorno = document.createElement("a");
+        ritorno.className = "ritorno";
+        ritorno.href = "/assicuro-la-tua-vita/#notizie";
+        ritorno.textContent = "← Torna a tutte le notizie";
+        contenuto.appendChild(ritorno);
+
+      } catch (errore) {
+        contenuto.textContent =
+          "Non è stato possibile caricare l'articolo. Riprova più tardi.";
+      }
+    }
+
+    caricaArticolo();
+  </script>
+</body>
+</html>

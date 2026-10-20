@@ -417,13 +417,26 @@ async function caricaNotizie() {
         scheda.appendChild(descrizione);
       }
 
-      const testo = document.createElement("div");
-      testo.innerHTML = DOMPurify.sanitize(
-        marked.parse(parti[2])
-      );
-      scheda.appendChild(testo);
+
+
+      const link = document.createElement("a");
+      link.href = "/assicuro-la-tua-vita/articolo.html?file=" +
+        encodeURIComponent(articolo.name);
+      link.textContent = "Leggi l’articolo →";
+      link.style.display = "inline-block";
+      link.style.marginTop = "12px";
+      link.style.color = "#174ea6";
+      link.style.fontWeight = "bold";
+      link.style.textDecoration = "none";
+      scheda.appendChild(link);
 
       elenco.appendChild(scheda);
+
+
+
+
+
+    
     }
   } catch (errore) {
     elenco.textContent =

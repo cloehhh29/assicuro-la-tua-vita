@@ -1,0 +1,65 @@
+
+backend:
+  name: turbo-github
+  turbo_site_id: 8f1d9a3a-778f-4377-8ac4-eb6210cc2f62
+  branch: main
+
+site_url: https://cloehhh29.github.io/assicuro-la-tua-vita
+display_url: https://cloehhh29.github.io/assicuro-la-tua-vita
+
+media_folder: "images/uploads"
+public_folder: "/assicuro-la-tua-vita/images/uploads"
+
+locale: "it"
+
+publish_mode: simple
+
+collections:
+  - name: "notizie"
+    label: "Notizie"
+    label_singular: "Notizia"
+    folder: "notizie"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields:
+      - date
+      - title
+    fields:
+      - label: "Titolo della notizia"
+        name: "title"
+        widget: "string"
+
+      - label: "Data di pubblicazione"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        date_format: "DD/MM/YYYY"
+        time_format: "HH:mm"
+
+      - label: "Categoria"
+        name: "categoria"
+        widget: "select"
+        options:
+          - "Attualità"
+          - "Assicurazioni"
+          - "Previdenza"
+          - "Normative"
+          - "Diritti dei cittadini"
+          - "Approfondimenti"
+
+      - label: "Sommario"
+        name: "descrizione"
+        widget: "text"
+
+      - label: "Immagine di copertina"
+        name: "immagine"
+        widget: "image"
+        required: false
+
+      - label: "Testo della notizia"
+        name: "body"
+        widget: "markdown"

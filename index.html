@@ -182,6 +182,7 @@
     <nav aria-label="Navigazione principale">
         <a href="#chi-siamo">Chi siamo</a>
         <a href="#servizi">Servizi</a>
+        <a href="#notizie">Notizie</a>
         <a href="#contatti">Contatti</a>
         <a href="contatti.html">Scrivici</a>
     </nav>
@@ -190,7 +191,7 @@
         <section class="hero">
             <h2>L'informazione è indispensabile </h2>
             <p>
-           Ciao, siamo Federica e Anna Lavoriamo perché crediamo in un'informazione chiara, 
+           Ciao, siamo Federica e Anna lavoriamo perché crediamo in un'informazione chiara, 
             libera e accessibile, capace di raccontare la realtà con curiosià, 
             spirito critico e attenzione ai dettagli.
                 
@@ -241,6 +242,20 @@
             </div>
         </section>
 
+
+        <section id="notizie">
+  <h2>Ultime notizie</h2>
+  <p class="sottotitolo">
+    Aggiornamenti, approfondimenti e informazioni
+    dal mondo delle assicurazioni.
+  </p>
+
+  <div id="elenco-notizie">
+    <p>Le notizie saranno disponibili qui.</p>
+  </div>
+</section>
+        
+
         <section id="contatti">
             <h2>Parliamone insieme</h2>
             <p>
@@ -260,5 +275,108 @@
         <p>&copy; 2026 Ti informo su tutto il tuo mondo </p>
         <p> Il tuo spazio oltre la notizia.</p>
     </footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+<script>
+async function caricaNotizie() {
+  const elenco = document.getElementById("elenco-notizie");
+
+  try {
+    const risposta = await fetch(
+      "https://api.github.com/repos/cloehhh29/assicuro-la-tua-vita/contents/notizie?ref=main"
+    );
+
+    if (risposta.status === 404) {
+      elenco.textContent = "Non ci sono ancora notizie pubblicate.";
+      return;
+    }
+
+    if (!risposta.ok) {
+      throw new Error("Impossibile leggere le notizie");
+    }
+
+    const file = await risposta.json();
+    const articoli = file
+      .filter(f => f.name.endsWith(".md"))
+      .sort((a, b) => b.name.localeCompare(a.name));
+
+    if (articoli.length === 0) {
+      elenco.textContent = "Non ci sono ancora notizie pubblicate.";
+      return;
+    }
+
+    elenco.replaceChildren();
+
+    for (const articolo of articoli) {
+      const contenuto = await fetch(articolo.download_url)
+        .then(r => {
+          if (!r.ok) throw new Error("Articolo non disponibile");
+          return r.text();
+        });
+
+      const parti = contenuto.match(
+        /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/
+      );
+
+      if (!parti) continue;
+
+      const dati = jsyaml.load(parti[1]) || {};
+      const scheda = document.createElement("article");
+      scheda.className = "scheda";
+
+      const titolo = document.createElement("h3");
+      titolo.textContent = dati.title || "Senza titolo";
+      scheda.appendChild(titolo);
+
+      if (dati.date) {
+        const data = document.createElement("p");
+        data.textContent = new Date(dati.date).toLocaleDateString("it-IT");
+        scheda.appendChild(data);
+      }
+
+      if (dati.categoria) {
+        const categoria = document.createElement("p");
+        categoria.textContent = dati.categoria;
+        scheda.appendChild(categoria);
+      }
+
+      if (dati.immagine) {
+        const immagine = document.createElement("img");
+        immagine.src = dati.immagine;
+        immagine.alt = dati.title || "Immagine della notizia";
+        immagine.style.maxWidth = "100%";
+        immagine.style.height = "auto";
+        scheda.appendChild(immagine);
+      }
+
+      if (dati.descrizione) {
+        const descrizione = document.createElement("p");
+        descrizione.textContent = dati.descrizione;
+        scheda.appendChild(descrizione);
+      }
+
+      const testo = document.createElement("div");
+      testo.innerHTML = DOMPurify.sanitize(
+        marked.parse(parti[2])
+      );
+      scheda.appendChild(testo);
+
+      elenco.appendChild(scheda);
+    }
+  } catch (errore) {
+    elenco.textContent =
+      "Le notizie non sono al momento disponibili. Riprova più tardi.";
+    console.error(errore);
+  }
+}
+
+caricaNotizie();
+</script>
+    
 </body>
 </html>

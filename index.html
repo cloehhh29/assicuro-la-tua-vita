@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Assicuro la tua vita: protezione, serenità e attenzione per il tuo futuro.">
+    <title>Assicuro la tua vita</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: #243247;
+            background: #f4f7fc;
+        }
+
+        header {
+            padding: 30px 18px;
+            text-align: center;
+            color: #fff;
+            background: #174ea6;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(2rem, 6vw, 2.7rem);
+        }
+
+        header p {
+            margin: 8px 0 0;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            padding: 14px 12px;
+            background: #12366f;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            text-decoration: underline;
+        }
+
+        .hero {
+            padding: 58px 20px;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, #174ea6, #347bd1);
+        }
+
+        .hero h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 38px 20px;
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #174ea6;
+            text-align: center;
+        }
+
+        .intro {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .servizi {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .scheda {
+            padding: 22px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .scheda h3 {
+            margin-top: 0;
+            color: #174ea6;
+        }
+
+        #contatti {
+            max-width: none;
+            text-align: center;
+            background: #e7effb;
+        }
+
+        #contatti p {
+            max-width: 700px;
+            margin: 10px auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .call-button,
+        .contact-button {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .call-button {
+            color: #fff;
+            background: #168447;
+        }
+
+        .contact-button {
+            color: #fff;
+            background: #174ea6;
+        }
+
+        .call-button:hover,
+        .contact-button:hover {
+            opacity: 0.88;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            background: #12366f;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        @media (min-width: 650px) {
+            .servizi {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Assicuro la tua vita</h1>
+        <p>Protezione, serenità e attenzione per il tuo futuro.</p>
+    </header>
+
+    <nav aria-label="Navigazione principale">
+        <a href="#chi-siamo">Chi siamo</a>
+        <a href="#servizi">Servizi</a>
+        <a href="#contatti">Contatti</a>
+        <a href="contatti.html">Scrivici</a>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h2>La tua tranquillità è importante</h2>
+            <p>
+                Lavoriamo per tutelare e assicurare al meglio i nostri clienti.
+                Vogliamo aiutarti a conoscere le possibilità di protezione più
+                adatte alle tue esigenze, con attenzione e chiarezza.
+            </p>
+        </section>
+
+        <section id="chi-siamo">
+            <h2>Chi siamo</h2>
+            <div class="intro">
+                <p>
+                    Lavoriamo per tutelare e assicurare al meglio i nostri clienti.
+                </p>
+                <p>
+                    Vogliamo aiutarti a conoscere le possibilità di protezione
+                    più adatte alle tue esigenze, con attenzione e chiarezza.
+                </p>
+            </div>
+        </section>
+
+        <section id="servizi">
+            <h2>Come possiamo aiutarti?</h2>
+            <div class="servizi">
+                <article class="scheda">
+                    <h3>Protezione della persona</h3>
+                    <p>
+                        Soluzioni assicurative pensate per proteggere te e i tuoi cari.
+                    </p>
+                </article>
+
+                <article class="scheda">
+                    <h3>Protezione della famiglia</h3>
+                    <p>
+                        Possibilità di tutela per affrontare con maggiore serenità gli imprevisti.
+                    </p>
+                </article>
+
+                <article class="scheda">
+                    <h3>Consulenza personalizzata</h3>
+                    <p>
+                        Un confronto per comprendere le tue necessità e valutare le opzioni.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contatti">
+            <h2>Parliamone insieme</h2>
+            <p>
+                Vuoi saperne di più sulle possibilità assicurative disponibili?
+                Contattaci per ricevere informazioni.
+            </p>
+
+            <div class="contact-buttons">
+                <!-- IMPORTANTE: sostituisci il numero di esempio con il numero aziendale reale. -->
+                <a class="call-button" href="tel:+391234567890">☎ Chiama ora</a>
+                <a class="contact-button" href="contatti.html">Oppure scrivici</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Assicuro la tua vita</p>
+        <p>La tua protezione, al centro.</p>
+    </footer>
+</body>
+</html>

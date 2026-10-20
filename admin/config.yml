@@ -50,6 +50,7 @@ collections:
           - "Normative"
           - "Diritti dei cittadini"
           - "Approfondimenti"
+          - "Altro"
 
       - label: "Sommario"
         name: "descrizione"

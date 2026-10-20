@@ -5,7 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Leggi le notizie e gli approfondimenti di Assicuro la tua vita.">
-  <title>Articolo | Assicuro la tua vita</title>
+      <title>Articolo | Assicuro la tua vita</title>
+<meta name="description" content="Leggi notizie, attualità e approfondimenti su Assicuro la tua vita.">
+<meta property="og:site_name" content="Assicuro la tua vita">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Assicuro la tua vita | Notizie e approfondimenti">
+<meta property="og:description" content="Leggi notizie e approfondimenti raccontati con chiarezza e attenzione alle persone.">
+<meta property="og:url" content="https://cloehhh29.github.io/assicuro-la-tua-vita/articolo.html">
 
   <style>
     body {
@@ -162,6 +168,61 @@
           marked.parse(parti[2])
         );
         contenuto.appendChild(testoArticolo);
+
+
+
+
+        
+        // Pulsanti per condividere l'articolo
+        const condivisione = document.createElement("div");
+        condivisione.style.display = "flex";
+        condivisione.style.flexWrap = "wrap";
+        condivisione.style.gap = "10px";
+        condivisione.style.marginTop = "28px";
+
+        const urlArticolo = window.location.href;
+        const titoloArticolo = dati.title || "Assicuro la tua vita";
+
+        const whatsapp = document.createElement("a");
+        whatsapp.href =
+          "https://wa.me/?text=" +
+          encodeURIComponent(titoloArticolo + " " + urlArticolo);
+        whatsapp.target = "_blank";
+        whatsapp.rel = "noopener noreferrer";
+        whatsapp.textContent = "Condividi su WhatsApp";
+        whatsapp.style.cssText =
+          "display:inline-block;padding:11px 16px;border-radius:8px;background:#168447;color:white;text-decoration:none;font-weight:bold;";
+        condivisione.appendChild(whatsapp);
+
+        const facebook = document.createElement("a");
+        facebook.href =
+          "https://www.facebook.com/sharer/sharer.php?u=" +
+          encodeURIComponent(urlArticolo);
+        facebook.target = "_blank";
+        facebook.rel = "noopener noreferrer";
+        facebook.textContent = "Condividi su Facebook";
+        facebook.style.cssText =
+          "display:inline-block;padding:11px 16px;border-radius:8px;background:#174ea6;color:white;text-decoration:none;font-weight:bold;";
+        condivisione.appendChild(facebook);
+
+        const copia = document.createElement("button");
+        copia.type = "button";
+        copia.textContent = "Copia il link";
+        copia.style.cssText =
+          "padding:11px 16px;border:1px solid #174ea6;border-radius:8px;background:white;color:#174ea6;font-weight:bold;cursor:pointer;";
+
+        copia.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(window.location.href);
+            copia.textContent = "Link copiato!";
+          } catch (errore) {
+            window.prompt("Copia questo link:", window.location.href);
+          }
+        });
+
+        condivisione.appendChild(copia);
+        contenuto.appendChild(condivisione);
+
 
         const ritorno = document.createElement("a");
         ritorno.className = "ritorno";
